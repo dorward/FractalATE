@@ -22,6 +22,7 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key(qw(item_id tag_id));
 __PACKAGE__->belongs_to('item', 'FractalATE::DB::Items',   { 'foreign.item_id' => 'self.item_id' } );
 __PACKAGE__->belongs_to('tag',  'FractalATE::DB::Tags',    { 'foreign.tag_id'  => 'self.tag_id'  } );
+
 1;
 =head1 NAME
 

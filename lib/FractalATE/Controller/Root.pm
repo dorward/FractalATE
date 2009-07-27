@@ -30,7 +30,6 @@ sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
     
     my $items = $c->model('DB')->resultset('Items');
-#    use Data::Dump qw/ddx/; ddx $items;
     $c->stash(items => $items);
     
 }
