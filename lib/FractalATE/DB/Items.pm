@@ -38,12 +38,23 @@ __PACKAGE__->has_many(
 );
 __PACKAGE__->many_to_many( aspects => 'item_aspects', 'aspects' );
 
-__PACKAGE__->inflate_column(
-    'item_id',
-    {
-        inflate => sub { $cipher->encrypt_number_b32_crockford(shift); },
-        deflate => sub { $cipher->decrypt_number_b32_crockford(shift); },
-    }
-);
-
+# inflate is not supported for searches. Write a ruleset method.
+# __PACKAGE__->inflate_column(
+#     'item_id',
+#     {
+#         inflate => sub {
+#             my $token = shift;
+#             my $value = $cipher->encrypt_number_b32_crockford($token);
+#             warn $token, " changed to ", $value, "\n";
+#             return $value;
+#         },
+#         deflate => sub {
+#             my $token = shift;
+#             my $value = $cipher->decrypt_number_b32_crockford($token);
+#             warn $token, " changed to ", $value, "\n";
+#             return $value;
+#         },
+#     }
+# );
+# 
 1;

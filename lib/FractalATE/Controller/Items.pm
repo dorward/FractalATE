@@ -16,17 +16,45 @@ Catalyst Controller.
 
 =cut
 
-
 =head2 index
 
 =cut
 
-sub index :Path :Args(0) {
-    my ( $self, $c ) = @_;
+sub items : PathPart('items') Chained('/') CaptureArgs(0) {
+    my ( $self, $c, $integer ) = @_;
     my $items = $c->model('DB')->resultset('Items');
-    $c->stash(items => $items);
+    $c->stash( items => $items );
 }
 
+sub index : PathPart('') Chained('items') Args(0) {
+    my ( $self, $c, $integer ) = @_;
+}
+
+sub view : PathPart('') Chained('items') Args(1) {
+    my ( $self, $c, $item_id ) = @_;
+    my $item = $c->stash->{items}->find({ item_id => $item_id });
+      die "No such item" if(!$item);
+
+      $c->stash(item => $item);}
+
+#sub base : Chained('/') PathPart('/items') CaptureArgs(1) {
+#    my ( $self, $c ) = @_;
+#
+#    print 'xxx';
+#    my $items = $c->model('DB')->resultset('Items');
+#    $c->stash(items => $items);
+#}
+
+#  sub view : Chained('base'): PathPart(''): CaptureArgs(1) {
+#      my ($self, $c, $item_id) = @_;
+#
+#      my $item = $c->stash->{items}->find({ item_id => $item_id },
+#                                             { key => 'primary' });
+#
+#      #die "No such item" if(!$item);
+#
+#      $c->stash(item => $item_id);
+#  }
 
 =head1 AUTHOR
 
