@@ -1,1 +1,9 @@
-Run script/fractalate_server.pl to test the application.
+A Catalyst application for managing items for the FATE system.
+
+The name comes from the fractal nature of the game, which allows
+the same rules to be applied to describe anything from a person
+to a planet.
+
+This is mostly a learning exercise for me to get to grips with 
+Catalyst before returning to my rather more insane Axford project
+with its inconsitent URIs.
