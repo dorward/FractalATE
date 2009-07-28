@@ -42,7 +42,10 @@ sub view : Chained('specific_item') PathPart('') Args(0) {
 }
 
 sub edit : Chained('specific_item') PathPart('edit') Args(0) {
-    
+    # Normally we just view the item with the edit template.
+    # If we are processing post data then we either have an error case
+    #   when we will put the data back in the template with error messages
+    #   or we will accept it and redirect to the view for the item.
 }
 
 
