@@ -33,10 +33,10 @@ __PACKAGE__->has_many(
 __PACKAGE__->many_to_many( tags => 'item_tags', 'tags' );
 
 __PACKAGE__->has_many(
-    item_aspects => 'FractalATE::DB::ItemTagBridges',
+    item_aspects => 'FractalATE::DB::ItemAspectBridges',
     { 'foreign.item_id' => 'self.item_id' }
 );
-__PACKAGE__->many_to_many( aspects => 'item_aspects', 'aspects' );
+__PACKAGE__->many_to_many( aspects => 'item_aspects', 'aspect' );
 
 # inflate is not supported for searches. Write a ruleset method.
 # __PACKAGE__->inflate_column(

@@ -23,6 +23,6 @@ __PACKAGE__->set_primary_key('aspect_id');
 __PACKAGE__->add_unique_constraint([ qw/aspect/ ]);
 
 __PACKAGE__->has_many(item_aspects => 'FractalATE::DB::ItemAspectBridges', { 'foreign.aspect_id' => 'self.aspect_id' });
-__PACKAGE__->many_to_many(items => 'item_aspects', 'items');
+__PACKAGE__->many_to_many(items => 'item_aspects', 'item');
 
 1;

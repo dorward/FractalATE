@@ -21,6 +21,12 @@
          <label for="name">Name</label>
          <input name="name" id="name" value="[% item.name | html %]">
       </div>
+      <div>
+         <fieldset>
+            <legend>Aspects</legend>
+         <input name="aspect" value="">
+      </div>
+
       
       <div>
          <input type="submit" value="save">
