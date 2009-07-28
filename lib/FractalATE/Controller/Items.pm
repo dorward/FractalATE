@@ -42,10 +42,23 @@ sub view : Chained('specific_item') PathPart('') Args(0) {
 }
 
 sub edit : Chained('specific_item') PathPart('edit') Args(0) {
+        my ( $self, $c, $item_id ) = @_;
+
     # Normally we just view the item with the edit template.
     # If we are processing post data then we either have an error case
     #   when we will put the data back in the template with error messages
     #   or we will accept it and redirect to the view for the item.
+    
+    if (lc $c->req->method eq 'post') {
+        my $item = $c->stash->{item};
+        my $params = $c->req->params;
+        # TODO: Sanity check this data!
+        my $name = $params->{name};
+        $item->update({
+            name => $name
+        });
+        
+    }
 }
 
 
