@@ -71,7 +71,6 @@ sub edit : Chained('specific_item') PathPart('edit') Args(0) {
             $item->add_to_aspects(\%datum, {});
         }
 
-
         return $c->res->redirect(
             $c->uri_for_action( 'items/view', $c->req->captures ) );
     }
@@ -85,6 +84,11 @@ sub add : Chained('items') PathPart('add') Args(0) {
         # TODO: Sanity check this data! And do it in a sub so it can be reused!
         my $name = $params->{name};
         my $item = $items->create({ name => $name });
+        my @aspects = $params->{aspect};
+        foreach my $aspect (@aspects) {
+            my %datum = (aspect => $aspect);
+            $item->add_to_aspects(\%datum, {});
+        }
         return $c->res->redirect(
             $c->uri_for_action( 'items/view', [ $item->item_id ] ) );
     } else {
