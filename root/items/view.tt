@@ -8,9 +8,11 @@
     <div id="branding">FractalATE</div>
     <p>Explore a FATE Fractal World</p>
     
-    <h1>[% item.name %]</h1>
+    <h1>[% item.name | html %]</h1>
+
+   <p><a href="[%item.item_id | html %]/edit">Edit</a></p>
     
-    <p>ID : [% item.item_id %]</p>
+    <p>ID : [% item.item_id | html %]</p>
     
 </body>
 </html>
