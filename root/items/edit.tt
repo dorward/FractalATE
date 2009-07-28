@@ -1,14 +1,18 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
    "http://www.w3.org/TR/html4/strict.dtd">
+   [%- title = "Add" -%]
+   [%- IF item -%]
+      [%- title = "Edit" -%]
+   [% END %]
 <html lang="en">
 <head>
-    <title>Items &mdash; FractalATE</title>
+    <title>[% title %] Item &mdash; FractalATE</title>
 </head>
 <body>
     <div id="branding">FractalATE</div>
     <p>Explore a FATE Fractal World</p>
     
-    <h1>Edit Item</h1>
+    <h1>[% title %] Item</h1>
     
     <form action="" method="post">
       <div>

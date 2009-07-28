@@ -71,6 +71,12 @@ sub edit : Chained('specific_item') PathPart('edit') Args(0) {
     }
 }
 
+sub add : Chained('items') PathPart('add') Args(0) {
+    # This should be the same as for edit, but without having data to start with
+    my ( $self, $c ) = @_;
+    $c->stash->{template} = 'items/edit.tt';
+}
+
 =head1 AUTHOR
 
 David Dorward
