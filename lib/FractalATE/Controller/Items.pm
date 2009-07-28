@@ -67,7 +67,7 @@ sub edit : Chained('specific_item') PathPart('edit') Args(0) {
         $item->update( { name => $name } );
 
         return $c->res->redirect(
-            $c->uri_for( $self->action_for('view'), $c->req->captures ) );
+            $c->uri_for_action( 'items/view', $c->req->captures ) );
     }
 }
 
