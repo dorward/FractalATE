@@ -30,31 +30,21 @@ sub index : PathPart('') Chained('items') Args(0) {
     my ( $self, $c, $integer ) = @_;
 }
 
-sub view : PathPart('') Chained('items') Args(1) {
+sub specific_item : PathPart('') Chained('items') CaptureArgs(1) {
     my ( $self, $c, $item_id ) = @_;
     my $item = $c->stash->{items}->find({ item_id => $item_id });
       die "No such item" if(!$item);
+      $c->stash(item => $item);
+}
 
-      $c->stash(item => $item);}
+sub view : Chained('specific_item') PathPart('') Args(0) {
+    # This just shows the item. Everything needed for this is in the specific_item part of the chain    
+}
 
-#sub base : Chained('/') PathPart('/items') CaptureArgs(1) {
-#    my ( $self, $c ) = @_;
-#
-#    print 'xxx';
-#    my $items = $c->model('DB')->resultset('Items');
-#    $c->stash(items => $items);
-#}
+sub edit : Chained('specific_item') PathPart('edit') Args(0) {
+    
+}
 
-#  sub view : Chained('base'): PathPart(''): CaptureArgs(1) {
-#      my ($self, $c, $item_id) = @_;
-#
-#      my $item = $c->stash->{items}->find({ item_id => $item_id },
-#                                             { key => 'primary' });
-#
-#      #die "No such item" if(!$item);
-#
-#      $c->stash(item => $item_id);
-#  }
 
 =head1 AUTHOR
 
