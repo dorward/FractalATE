@@ -4,10 +4,10 @@ use warnings;
 
 use DBIx::Class;
 use base qw/DBIx::Class/;
-use Crypt::Skip32::Base32Crockford;
+#use Crypt::Skip32::Base32Crockford;
 
-my $key = pack( 'H20', "DA41DD04111A4D" );                # Always 10 bytes!
-my $cipher = Crypt::Skip32::Base32Crockford->new($key);
+#my $key = pack( 'H20', "DA41DD04111A4D" );
+#my $cipher = Crypt::Skip32::Base32Crockford->new($key);
 
 __PACKAGE__->load_components(qw/PK::Auto Core/);
 __PACKAGE__->table('items');
