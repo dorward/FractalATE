@@ -59,10 +59,10 @@ sub edit : Chained('specific_item') PathPart('edit') Args(0) {
     #   or we will accept it and redirect to the view for the item.
 
     if ( lc $c->req->method eq 'post' ) {
-        my $item   = $c->stash->{item};
         my $params = $c->req->params;
+        my $item   = $c->stash->{item};
 
-        # TODO: Sanity check this data!
+        # TODO: Sanity check this data! And do it in a sub so it can be reused!
         my $name = $params->{name};
         $item->update( { name => $name } );
 
@@ -72,9 +72,19 @@ sub edit : Chained('specific_item') PathPart('edit') Args(0) {
 }
 
 sub add : Chained('items') PathPart('add') Args(0) {
-    # This should be the same as for edit, but without having data to start with
     my ( $self, $c ) = @_;
-    $c->stash->{template} = 'items/edit.tt';
+    if ( lc $c->req->method eq 'post' ) {
+        my $params = $c->req->params;
+        my $items = $c->stash->{items};
+        # TODO: Sanity check this data! And do it in a sub so it can be reused!
+        my $name = $params->{name};
+        my $item = $items->create({ name => $name });
+        return $c->res->redirect(
+            $c->uri_for_action( 'items/view', [ $item->item_id ] ) );
+    } else {
+        # Share a template with edit
+        $c->stash->{template} = 'items/edit.tt';
+    }
 }
 
 =head1 AUTHOR
