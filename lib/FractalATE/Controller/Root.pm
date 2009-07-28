@@ -29,7 +29,7 @@ FractalATE::Controller::Root - Root Controller for FractalATE
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
     
-    my $items = $c->model('DB')->resultset('Items');
+    my $items = $c->model('DB')->resultset('Items');    
     $c->stash(items => $items);
     
 }

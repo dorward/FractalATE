@@ -1,0 +1,32 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+   [%- title = "Add" -%]
+   [%- IF aspect -%]
+      [%- title = "Edit" -%]
+   [% END %]
+<html lang="en">
+<head>
+    <title>[% title %] Aspect &mdash; FractalATE</title>
+</head>
+<body>
+    <div id="branding">FractalATE</div>
+    <p>Explore a FATE Fractal World</p>
+    
+    <h1>[% title %] Aspect</h1>
+    
+    <form action="" method="post">
+      <div>
+         <input type="hidden" name="id" value="[% aspect.id | html %]">
+         
+         <label for="name">Name</label>
+         <input name="aspect" id="name" value="[% aspect.name | html %]">
+      </div>
+      
+      <div>
+         <input type="submit" value="save">
+      </div>
+    </form>
+    
+    
+</body>
+</html>

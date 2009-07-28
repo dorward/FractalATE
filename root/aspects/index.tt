@@ -1,0 +1,20 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title>Aspects &mdash; FractalATE</title>
+</head>
+<body>
+    <div id="branding">FractalATE</div>
+    <p>Explore a FATE Fractal World</p>
+    
+    <h1>Aspects</h1>
+    
+    <ul>
+    [% WHILE (aspect = aspects.next) %]
+      <li><a href="[% aspect.aspect_id %]">[% aspect.aspect %]</a></li>
+    [% END %]
+    </ul>
+    
+</body>
+</html>

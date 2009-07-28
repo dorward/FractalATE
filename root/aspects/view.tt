@@ -1,0 +1,18 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+    <title>Aspects &mdash; FractalATE</title>
+</head>
+<body>
+    <div id="branding">FractalATE</div>
+    <p>Explore a FATE Fractal World</p>
+    
+    <h1>[% aspect.aspect | html %]</h1>
+
+   <p><a href="[%aspect.aspect_id | html %]/edit">Edit</a></p>
+    
+    <p>ID : [% aspect.aspect_id | html %]</p>
+    
+</body>
+</html>
