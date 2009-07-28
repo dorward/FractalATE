@@ -21,16 +21,19 @@ Catalyst Controller.
 =cut
 
 sub items : PathPart('items') Chained('/') CaptureArgs(0) {
+    # All actions in this controller will use the Items result set, so we will
+    # pop it on the stash here.
     my ( $self, $c, $integer ) = @_;
     my $items = $c->model('DB')->resultset('Items');
     $c->stash( items => $items );
 }
 
 sub index : PathPart('') Chained('items') Args(0) {
-    my ( $self, $c, $integer ) = @_;
+    # Default action - lists items
 }
 
 sub specific_item : PathPart('') Chained('items') CaptureArgs(1) {
+    # Gets data for a specific item
     my ( $self, $c, $item_id ) = @_;
     my $item = $c->stash->{items}->find({ item_id => $item_id });
       die "No such item" if(!$item);
@@ -42,7 +45,8 @@ sub view : Chained('specific_item') PathPart('') Args(0) {
 }
 
 sub edit : Chained('specific_item') PathPart('edit') Args(0) {
-        my ( $self, $c, $item_id ) = @_;
+    # Allow an item to be edited
+        my ( $self, $c ) = @_;
 
     # Normally we just view the item with the edit template.
     # If we are processing post data then we either have an error case
@@ -58,6 +62,15 @@ sub edit : Chained('specific_item') PathPart('edit') Args(0) {
             name => $name
         });
         
+        #use Data::Dump qw/ddx/;
+        #ddx $c->req->captures;
+        
+        return $c->res->redirect(
+            $c->uri_for(
+                $c->action('view'),
+                $c->req->captures
+            )
+        );
     }
 }
 
