@@ -24,7 +24,10 @@
       <div>
          <fieldset>
             <legend>Aspects</legend>
-         <input name="aspect" value="">
+            [% FOREACH aspect = item.aspects %]
+               <div><input name="aspect" value="[% aspect.aspect | html %]"></div>
+            [% END %]
+         <div><input name="aspect" value=""></div>
       </div>
 
       

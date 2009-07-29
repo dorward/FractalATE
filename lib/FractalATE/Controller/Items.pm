@@ -89,8 +89,9 @@ sub create_or_update_item {
     
     # TODO: Sanity check this data! And do it in a sub so it can be reused!
     my $name    = $params->{name};
-    my @aspects = $params->{aspect};
-    @aspects = map { { aspect => $_ } } grep { defined $_ } @aspects;
+    my @aspects = @{$params->{aspect}};
+    use Data::Dump qw/ddx/;
+    @aspects = map { aspect => $_ }, grep { defined $_ && $_ !~ /^\s*$/ } @aspects;
     
     my %data = ( name => $name );
     if ($item) {
