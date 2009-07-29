@@ -60,15 +60,7 @@ sub edit : Chained('specific_item') PathPart('edit') Args(0) {
 
     if ( lc $c->req->method eq 'post' ) {
         my $params = $c->req->params;
-        my $item   = $c->stash->{item};
-
-        # TODO: Sanity check this data! And do it in a sub so it can be reused!
-        my $name = $params->{name};
-        $item->update( { name => $name } );
-        my @aspects = $params->{aspect};
-        @aspects = map { { aspect => $_} } @aspects;
-        $item->set_aspects(\@aspects);
-
+        my $item = create_or_update_item( $self, $c);
         return $c->res->redirect(
             $c->uri_for_action( 'items/view', $c->req->captures ) );
     }
@@ -77,20 +69,37 @@ sub edit : Chained('specific_item') PathPart('edit') Args(0) {
 sub add : Chained('items') PathPart('add') Args(0) {
     my ( $self, $c ) = @_;
     if ( lc $c->req->method eq 'post' ) {
-        my $params = $c->req->params;
-        my $items = $c->stash->{items};
-        # TODO: Sanity check this data! And do it in a sub so it can be reused!
-        my $name = $params->{name};
-        my $item = $items->create({ name => $name });
-        my @aspects = $params->{aspect};
-        @aspects = map { { aspect => $_} } @aspects;
-        $item->set_aspects(\@aspects);
+        my $item = create_or_update_item( $self, $c );
         return $c->res->redirect(
             $c->uri_for_action( 'items/view', [ $item->item_id ] ) );
-    } else {
+    }
+    else {
+
         # Share a template with edit
         $c->stash->{template} = 'items/edit.tt';
     }
+}
+
+sub create_or_update_item {
+    my ( $self, $c ) = @_;
+    
+    my $params = $c->req->params;
+    my $items  = $c->stash->{items};
+    my $item   = $c->stash->{item};
+    
+    # TODO: Sanity check this data! And do it in a sub so it can be reused!
+    my $name    = $params->{name};
+    my @aspects = $params->{aspect};
+    @aspects = map { { aspect => $_ } } grep { defined $_ } @aspects;
+    
+    my %data = ( name => $name );
+    if ($item) {
+        $data{item_id} = $item->item_id;
+    }
+    
+    $item    = $items->update_or_create( \%data );
+    $item->set_aspects( \@aspects );
+    return $item;
 }
 
 =head1 AUTHOR
