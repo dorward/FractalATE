@@ -66,10 +66,8 @@ sub edit : Chained('specific_item') PathPart('edit') Args(0) {
         my $name = $params->{name};
         $item->update( { name => $name } );
         my @aspects = $params->{aspect};
-        foreach my $aspect (@aspects) {
-            my %datum = (aspect => $aspect);
-            $item->add_to_aspects(\%datum, {});
-        }
+        @aspects = map { { aspect => $_} } @aspects;
+        $item->set_aspects(\@aspects);
 
         return $c->res->redirect(
             $c->uri_for_action( 'items/view', $c->req->captures ) );
@@ -85,10 +83,8 @@ sub add : Chained('items') PathPart('add') Args(0) {
         my $name = $params->{name};
         my $item = $items->create({ name => $name });
         my @aspects = $params->{aspect};
-        foreach my $aspect (@aspects) {
-            my %datum = (aspect => $aspect);
-            $item->add_to_aspects(\%datum, {});
-        }
+        @aspects = map { { aspect => $_} } @aspects;
+        $item->set_aspects(\@aspects);
         return $c->res->redirect(
             $c->uri_for_action( 'items/view', [ $item->item_id ] ) );
     } else {
